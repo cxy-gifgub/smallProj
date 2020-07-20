@@ -32,9 +32,12 @@ export default {
         width: 100%;
     }
     .el-carousel__item{
-        height: auto;
+        height: 375px;
     }
     .el-carousel{
         height: auto;
+    }
+    .el-carousel__container{
+        height: 375px;
     }
 </style>

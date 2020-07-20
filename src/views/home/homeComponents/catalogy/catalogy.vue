@@ -24,14 +24,16 @@ export default {
 
 <style>
     #catalogy{
-        margin-top:3rem;
+        margin-top:1rem;
+        padding: 0.5rem 0;
+        background-color: #fff;
     }
     .recommendBox1{
         display: flex;
         align-items: center;
         margin-top: 0.5rem;
         flex-wrap: wrap;
-        padding-bottom: 60px;
+        
     }
     .recommendItem{
         display: flex;
@@ -56,5 +58,8 @@ export default {
     .item-title{
         color: #444;
         margin-top: 0.3rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 </style>

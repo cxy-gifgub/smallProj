@@ -4,6 +4,7 @@
       <swiper :imgList="navList"></swiper>
       <recommend :recommendList="recommendList"></recommend>
       <catalogy :catalogyList="catalogyList"></catalogy>
+      <tabControl :titles="fenlei" class="tabState"></tabControl>
   </div>
 </template>
 
@@ -14,20 +15,23 @@ import {getHomeBili} from 'network/homeBili'
 import swiper from '@/components/common/swiper/swiper'
 import recommend from '@/views/home/homeComponents/recommend/recommend'
 import catalogy from '@/views/home/homeComponents/catalogy/catalogy'
+import tabControl from '@/components/content/tabControl/tabControl'
 export default {
     data(){
       return{
         navList:[],
         recommendList:[],
         cataList:[],
-        catalogyList:[]
+        catalogyList:[],
+        fenlei:['流行','新款','精选']
       }
     },
     components:{
       NavBar,
       swiper,
       recommend,
-      catalogy
+      catalogy,
+      tabControl
     },
     created(){
       getHomeListdata().then(res=>{
@@ -39,7 +43,7 @@ export default {
       getHomeBili().then(res=>{
         this.cataList = Object.values(res.data)
         console.log(this.cataList,'我是bili');
-        for(let i=0;i<this.cataList.length-4;i++){
+        for(let i=0;i<this.cataList.length-6;i++){
           this.catalogyList[i] = this.cataList[i][0]
         }
         this.catalogyList = Object.values(this.catalogyList)
@@ -52,5 +56,13 @@ export default {
   .nav-color{
     background-color: teal;
     color: #fff;
+  }
+  #home{
+    background-color: #eee;
+    padding-bottom: 60px;
+  }
+  .tabState{
+    position: sticky;
+    top: 0;
   }
 </style>

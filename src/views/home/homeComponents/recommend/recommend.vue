@@ -26,7 +26,8 @@ export default {
         display: flex;
         align-items: center;
         height: 6rem;
-        margin-top: 0.5rem;
+        padding-top: 0.5rem;
+        background-color: #fff;
     }
     .recommendItem{
         display: flex;
