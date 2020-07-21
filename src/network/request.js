@@ -8,6 +8,7 @@ export function request(config) {
     if (config.urltype == 2) {
         nowUrl = '/bilibiliapi'
     }
+
     const instance = axios.create({
         baseURL: nowUrl,
         timeout: 5000

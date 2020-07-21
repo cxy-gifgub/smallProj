@@ -13,7 +13,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/bilibiliapi': {
-                target: 'https://www.bilibili.com',  // target host
+                target: 'https://api.bilibili.com/',  // target host3
                 ws: true,  // proxy websockets 
                 changeOrigin: true,  // needed for virtual hosted sites
                 pathRewrite: {
