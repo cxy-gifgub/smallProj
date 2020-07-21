@@ -1,13 +1,141 @@
 <template>
-  <h2>分类</h2>
+  <div class="wrapper">
+    <ul class="content">
+      <li>分类11</li>
+      <li>分类12</li>
+      <li>分类13</li>
+      <li>分类14</li>
+      <li>分类15</li>
+      <li>分类16</li>
+      <li>分类17</li>
+      <li>分类18</li>
+      <li>分类19</li>
+      <li>分类110</li>
+      <li>分类111</li>
+      <li>分类112</li>
+      <li>分类113</li>
+      <li>分类114</li>
+      <li>分类115</li>
+      <li>分类116</li>
+      <li>分类117</li>
+      <li>分类118</li>
+      <li>分类119</li>
+      <li>分类120</li>
+      <li>分类121</li>
+      <li>分类122</li>
+      <li>分类123</li>
+      <li>分类124</li>
+      <li>分类125</li>
+      <li>分类126</li>
+      <li>分类127</li>
+      <li>分类128</li>
+      <li>分类129</li>
+      <li>分类130</li>
+      <li>分类131</li>
+      <li>分类132</li>
+      <li>分类133</li>
+      <li>分类134</li>
+      <li>分类135</li>
+      <li>分类136</li>
+      <li>分类137</li>
+      <li>分类138</li>
+      <li>分类139</li>
+      <li>分类140</li>
+      <li>分类141</li>
+      <li>分类142</li>
+      <li>分类143</li>
+      <li>分类144</li>
+      <li>分类145</li>
+      <li>分类146</li>
+      <li>分类147</li>
+      <li>分类148</li>
+      <li>分类149</li>
+      <li>分类150</li>
+      <li>分类151</li>
+      <li>分类152</li>
+      <li>分类153</li>
+      <li>分类154</li>
+      <li>分类155</li>
+      <li>分类156</li>
+      <li>分类157</li>
+      <li>分类158</li>
+      <li>分类159</li>
+      <li>分类160</li>
+      <li>分类161</li>
+      <li>分类162</li>
+      <li>分类163</li>
+      <li>分类164</li>
+      <li>分类165</li>
+      <li>分类166</li>
+      <li>分类167</li>
+      <li>分类168</li>
+      <li>分类169</li>
+      <li>分类170</li>
+      <li>分类171</li>
+      <li>分类172</li>
+      <li>分类173</li>
+      <li>分类174</li>
+      <li>分类175</li>
+      <li>分类176</li>
+      <li>分类177</li>
+      <li>分类178</li>
+      <li>分类179</li>
+      <li>分类180</li>
+      <li>分类181</li>
+      <li>分类182</li>
+      <li>分类183</li>
+      <li>分类184</li>
+      <li>分类185</li>
+      <li>分类186</li>
+      <li>分类187</li>
+      <li>分类188</li>
+      <li>分类189</li>
+      <li>分类190</li>
+      <li>分类191</li>
+      <li>分类192</li>
+      <li>分类193</li>
+      <li>分类194</li>
+      <li>分类195</li>
+      <li>分类196</li>
+      <li>分类197</li>
+      <li>分类198</li>
+      <li>分类199</li>
+      <li>分类1100</li>
+    </ul>
+  </div>
 </template>
 
 <script>
+import BScroll from 'better-scroll'
 export default {
+  data(){
+    return{
+      scroll:null
+    }
+  },
+  created(){
+    
+  },
+  mounted(){
+    this.scroll = new BScroll(document.querySelector('.wrapper'),{
+      probeType:3,
+      click:true,
+      pullUpLoad:true
+    })
 
+    this.scroll.on('scroll',(position)=>{
+      // console.log(position);
+    })
+    this.scroll.on('pullingUp',()=>{
+      console.log('上拉加载');
+    })
+  }
 }
 </script>
 
 <style>
-
+  .wrapper{
+    height: 300px;
+    background-color: #00808062;
+  }
 </style>

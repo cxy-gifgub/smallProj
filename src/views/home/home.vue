@@ -19,6 +19,7 @@ import recommend from '@/views/home/homeComponents/recommend/recommend'
 import catalogy from '@/views/home/homeComponents/catalogy/catalogy'
 import tabControl from '@/components/content/tabControl/tabControl'
 import goodlist from '@/components/content/goodlist/goodlist'
+import scroll from '@/components/common/scroll/scroll'
 export default {
     data(){
       return{

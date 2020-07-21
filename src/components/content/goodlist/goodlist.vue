@@ -33,16 +33,21 @@ export default {
         height: 10rem;
         overflow: hidden;
         text-overflow: ellipsis;
+        font-size: 3.2vw;
+        color: #212121;
+        letter-spacing: 2px;
     }
     .good-item-img{
         width: 100%;
     }
     .good-title{
         flex: 1;
-        height: 2.5rem;
+        max-height: 2rem;
+        overflow: hidden;
     }
     .good-item-img img{
         width: 100%;
         height: 7rem;
+        border-radius: 3px;
     }
 </style>
