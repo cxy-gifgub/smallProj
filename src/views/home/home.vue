@@ -8,7 +8,10 @@
         <swiper :imgList="navList"></swiper>
         <recommend :recommendList="recommendList"></recommend>
         <!-- <catalogy :catalogyList="catalogyList"></catalogy> -->
-        <tabControl :titles="fenlei" class="tabState" @tabClick='tabClick' ref="tabControl" :class="{'is_fixed' : isFixed}"></tabControl>
+        <tabControl :titles="fenlei" 
+                    class="tabState" 
+                    @tabClick='tabClick' 
+                    ref="tabControl"></tabControl>
         <goodlist :goodlist="goods[currentType].list"></goodlist>
       </scroll>
       <backtop @click.native="backtop"></backtop>
@@ -44,7 +47,8 @@ export default {
         },
         currentType:'1',
         offsetTop:0,
-        isFixed:false
+        isFixed:false,
+        saveY:0
       }
     },
     components:{
@@ -64,13 +68,7 @@ export default {
       this.getHomeDedatil('5')
     },
     mounted(){
-      window.addEventListener('scroll', this.initHeight);
-      this.$nextTick(()=>{
-        //this.$nextTick()将回调延迟到下次 DOM 更新循环之后执行。
-        console.log(this.$refs.tabControl.$el.offsetTop)
-        this.offsetTop = this.$refs.tabControl.$el.offsetTop
-      })
-      
+
     },
     methods:{
       getHomeBanner(){
@@ -119,19 +117,21 @@ export default {
         }
       },
       backtop(){
+        console.log('回到顶部')
         this.$refs.scroll.scroll.scrollTo(0,0,500)
       },
       loadMore(){
         console.log('加载更多吧!');
         this.getHomeDedatil(this.currentType)
       },
-      initHeight() {
-        console.log('buguanwo ?');
-        // 设置或获取位于对象最顶端和窗口中可见内容的最顶端之间的距离 (被卷曲的高度)
-        var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-        //如果被卷曲的高度大于吸顶元素到顶端位置 的距离
-        this.isFixed = scrollTop > this.offsetTop ? true : false;
-      }
+    },
+    activated(){
+      this.$refs.scroll.scroll.refresh()
+      this.$refs.scroll.scroll.scrollTo(0,this.saveY)
+      
+    },
+    deactivated(){
+      this.saveY = this.$refs.scroll.scroll.y
     }
 }
 </script>

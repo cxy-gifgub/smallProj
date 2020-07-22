@@ -10,9 +10,12 @@ export function getHomeBili(rid,pn) {
         urltype: 2
     })
 }
-// export function getHomeBili2() {
-//     return request({
-//         url: '/ajax/member/getSubmitVideos?mid=320491072&page=1',
-//         urltype: 3
-//     })
-// }
+export function getHomeBiliDetail(bvid) {
+    return request({
+        url: '/x/web-interface/view?',
+        params:{
+            bvid:bvid
+        },
+        urltype: 2
+    })
+}
