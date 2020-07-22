@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="list-box">
-          <div class="list-item" v-for="item in goodlist" :key="item.aid">
+          <div class="list-item" v-for="item in goodlist">
               <div class="good-item-img"><img :src="item.pic" alt=""></div>
               <div class="good-title">{{item.title}}</div>
           </div>

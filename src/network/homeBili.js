@@ -2,7 +2,7 @@ import { request } from 'network/request'
 
 export function getHomeBili(rid,pn) {
     return request({
-        url: '/x/web-interface/dynamic/region?&jsonp=jsonp&ps=10',
+        url: '/x/web-interface/dynamic/region?&jsonp=jsonp&ps=30',
         params: {
             pn,
             rid

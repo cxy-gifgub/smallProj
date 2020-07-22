@@ -1,7 +1,7 @@
 <template>
 <div>
     <div class="block">
-        <el-carousel height="150px" autoplay>
+        <el-carousel height="190px" autoplay>
             <el-carousel-item v-for="item in imgList" :key="item.acm">
                 <a :href="item.link">
                     <img :src="item.image">
@@ -31,7 +31,7 @@ export default {
     .el-carousel__item img{
         width: 100%;
     }
-    .el-carousel__item{
+    el-carousel__item{
         height: 375px;
     }
     .el-carousel{
