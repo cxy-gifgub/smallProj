@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="list-box">
-          <div class="list-item" v-for="item in goodlist" :key="item.bvid" @click="toDetail(item.bvid)">
+          <div class="list-item" v-for="(item,index) in goodlist" :key="item.bvid" @click="toDetail(index)">
               <div class="good-item-img"><img :src="item.pic" alt=""></div>
               <div class="good-title">{{item.title}}</div>
           </div>
@@ -15,12 +15,14 @@ export default {
         goodlist:Array
     },
     methods:{
-        toDetail(bvid){
-            console.log(bvid,'我是bvid');
+        toDetail(index){
+            console.log(this.goodlist[index]);
             this.$router.push({
                 path:'/detail/',
-                query:{bvid:bvid}
-                }).catch(err => err)
+                query:{bvid:this.goodlist[index].bvid,
+                        aid:this.goodlist[index].aid,
+                        cid:this.goodlist[index].cid
+                }}).catch(err => err)
         }
     },
 }
