@@ -1,19 +1,6 @@
 <template>
   <div>
-      <div class="video-img">
-          <img class="video-pic" :src="videoList.pic">
-          <img class="video-icon" src="@/assets/img/video/play.png">
-      </div>
-      <div class="video-tab">
-            <div class="tab-left">
-                <div class="tab-left-item" v-for="(item,index) in videoInfoItem" :class="{active:index === currentIndex}" @click="itemclick(index)" :key="index">
-                    <div class="tab-sm">{{item}}</div>
-                </div>
-            </div>
-        <div class="tab-right"></div>
-      </div>  
-
-      <!-- <div class="UUInfo-box">
+            <div class="UUInfo-box">
           <div class="UUInfo-head">
               <div class="UU-img">
                   <img :src="userInfo.face" alt="">
@@ -32,8 +19,8 @@
       </div>
       <div id="coll-box">
         <el-collapse>
-            <el-collapse-item :title="videoList.title" name="1">
-                <div class="video-desc" v-html="videoList.desc"></div>
+            <el-collapse-item :title="detailInfo.title" name="1">
+                <div class="video-desc" v-html="detailInfo.desc"></div>
             </el-collapse-item>
         </el-collapse>
       </div>
@@ -46,7 +33,7 @@
               <div class="v-oth-icon"><img src="@/assets/img/video/danmaku.png" alt=""></div>
               <div>{{otherinfo.danmaku}}</div>
           </div>
-          <div class="video-bvid">{{videoList.bvid}}</div>
+          <div class="video-bvid">{{detailInfo.bvid}}</div>
       </div>
       <div id="user-action">
           <div class="action-item">
@@ -92,56 +79,33 @@
       </div>
       <div id="video-tags">
           <div class="tags-item" v-for="(item,index) in tagFinally" :class="{firstTag:index == 0}">{{item}}</div>
-      </div> -->
-      <detailInfo :detailInfo="videoList"></detailInfo>
-      <detailRecommand v-if="recommand" :bvid="this.$route.query.bvid"></detailRecommand>
-      <detailReply v-if="reply"></detailReply>
+      </div>
   </div>
 </template>
 
 <script>
-import {getHomeBiliDetail} from 'network/homeBili'
-import detailRecommand from '@/views/detail/detailRecommand'
-import detailReply from '@/views/detail/detailReply'
-import detailInfo from '@/views/detail/detailInfo'
 export default {
-    name:"detail",
-    components:{
-        detailRecommand,
-        detailReply,
-        detailInfo
+    props:{
+        detailInfo:Object
     },
     data(){
-        return {
-            recommand:true,
-            reply:false,
-            videoList:{},
-            videoInfoItem:['简介','评论'],
-            currentIndex:0,
+        return{
             userInfo:{
                 face:'',
                 name:''
             },
             otherinfo:{},
-            tag:[],
             tagFinally:[],
-            detailInfo:[]
+            tag:[]
         }
     },
-    created(){
-        this.getDetail();
-        console.log('我是挂载前');
-    },
-    methods:{
-        getDetail(){
-            getHomeBiliDetail(this.$route.query.bvid).then((res)=>{
-                console.log(res);
-                this.videoList = res.data.data
-                this.userInfo = this.videoList.owner
-                this.otherinfo = this.videoList.stat
-                var indexE =this.videoList.dynamic.lastIndexOf("\#");  
-                var indexB =this.videoList.dynamic.indexOf("\#");  
-                this.tag = (this.videoList.dynamic).slice(indexB,indexE).split("#")
+    mounted(){
+        console.log(this.detailInfo,'我再info');
+        this.userInfo = this.detailInfo.owner;
+        this.otherinfo =this.detailInfo.stat
+        var indexE =this.detailInfo.dynamic.lastIndexOf("\#");  
+                var indexB =this.detailInfo.dynamic.indexOf("\#");  
+                this.tag = (this.detailInfo.dynamic).slice(indexB,indexE).split("#")
                 //把视频tag切出来放到数组
                 for(let i = 0,j = 0;i<this.tag.length;i++){
                     if(this.tag[i] != ''){
@@ -149,85 +113,12 @@ export default {
                         j += 1;
                     }
                 }
-            })
-        },
-        itemclick(index){
-            this.currentIndex = index;
-                this.recommand = !this.recommand;
-                this.reply = !this.reply
-
-            this.$emit('tabClick',index)
-        },
-        GetChinese(strValue) {
-            if (strValue !== null && strValue !== '') {
-            const reg = /[\u4e00-\u9fa5]/g;
-            return strValue.match(reg).join('');
-            }
-            return '';
-        }
-    },
-    // beforeUpdate(){
-    //     this.getDetail()
-    // }
-    // watch:{
-    //     "$route.query.bvid": "getDetail"
-    // }
-
+    }
 }
 </script>
 
 <style>
-    .video-img{
-        position: relative;
-        width: 100%;
-        height: 12rem;
-        background-color: #fff;
-        overflow: hidden;
-    }
-    .video-pic{
-        position: absolute;
-        top: 0;
-        width: 100%;
-    }
-    .video-icon{
-        position: absolute;
-        height: 3.5rem;
-        bottom: 1rem;
-        right: 1rem;
-        z-index: 1;
-        opacity: 0.8;
-    }
-    .video-tab{
-        display: flex;
-    }
-    .tab-left{
-        height: 2rem;
-        width: 50%;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-    }
-    .tab-left{
-        padding: 0.2rem 0.5rem;
-        color: #999;
-        font-size: 14px;
-    }
-    .tab-left-item{
-        height: 100%;
-    }
-    .tab-sm{
-        height: 100%;
-        display: flex;
-        align-items: center;
-        font-weight: 550;
-    }
-    .active{
-        color: teal;
-    }
-    .active div{
-        border-bottom: 2px solid teal;
-    }
-    /* .UUInfo-box{
+    .UUInfo-box{
         height: 3rem;
         width: 100%;
         margin: .5rem auto;
@@ -349,5 +240,5 @@ export default {
     }
     .firstTag{
         color: teal;
-    } */
+    }
 </style>

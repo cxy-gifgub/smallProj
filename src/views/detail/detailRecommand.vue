@@ -63,10 +63,10 @@ export default {
         position: absolute;
         content: '';
         background-color: rgb(221, 221, 221);
-        width: 100%;
+        width: 95%;
         height: 1px;
-        top: -0.25rem;
-        left: -0.5rem;
+        top: 0;
+        left: 0.5rem;
     }
     .recom-info{
         width: 60%;
@@ -75,20 +75,23 @@ export default {
     .recom-pic{
         width: 40%;
     }
+    .recom-pic{
+        height: 5rem;
+        overflow: hidden;
+    }
     .recom-pic-box img{
         width: 100%;
         border-radius: 5px;
     }
     .recom-title{
-        max-height: 42%;
+        height: 2.5rem;
         font-size: 14px;
         overflow: hidden;
         color: #333;
     }
     .recom-up{
         color: #999;
-        font-size: 14px;
-        margin: 0.2rem 0;
+        font-size: 12px;
         display: flex;
         align-items: center;
     }
