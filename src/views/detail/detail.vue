@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div id="video-detail">
       <div class="video-img">
-          <img class="video-pic" :src="videoList.pic">
+          <img class="video-pic" :src="videoList.pic" @click="addCart">
           <img class="video-icon" src="@/assets/img/video/play.png">
       </div>
       <div class="video-tab">
@@ -12,90 +12,9 @@
             </div>
         <div class="tab-right"></div>
       </div>  
-
-      <!-- <div class="UUInfo-box">
-          <div class="UUInfo-head">
-              <div class="UU-img">
-                  <img :src="userInfo.face" alt="">
-              </div>
-              <div class="UU-name">
-                  <div>{{userInfo.name}}</div>
-                  <div></div>
-              </div>
-          </div>
-          <div class="follow-UU">
-              <div class="follow-click">
-                    关注
-              </div>
-              
-          </div>
-      </div>
-      <div id="coll-box">
-        <el-collapse>
-            <el-collapse-item :title="videoList.title" name="1">
-                <div class="video-desc" v-html="videoList.desc"></div>
-            </el-collapse-item>
-        </el-collapse>
-      </div>
-      <div id="video-otherinfo">
-          <div class="play-times">
-              <div class="v-oth-icon"><img src="@/assets/img/video/views.png" alt=""></div>
-              <div>{{otherinfo.view>=10000?(otherinfo.view/10000).toFixed(2):otherinfo.view}}万</div>
-          </div>
-          <div class="danmu-count">
-              <div class="v-oth-icon"><img src="@/assets/img/video/danmaku.png" alt=""></div>
-              <div>{{otherinfo.danmaku}}</div>
-          </div>
-          <div class="video-bvid">{{videoList.bvid}}</div>
-      </div>
-      <div id="user-action">
-          <div class="action-item">
-              <div class="action-item-icon">
-                  <img src="@/assets/img/video/zan.png" alt="">
-              </div>
-              <div class="action-count">
-                  {{otherinfo.like>=10000?(otherinfo.like/10000).toFixed(1)+'万':otherinfo.like}}
-              </div>
-          </div>
-          <div class="action-item">
-              <div class="action-item-icon">
-                  <img src="@/assets/img/video/cai.png" alt="">
-              </div>
-              <div class="action-count">
-                  {{otherinfo.dislike>0?otherinfo.dislike:'不喜欢'}}
-              </div>
-          </div>
-          <div class="action-item">
-              <div class="action-item-icon">
-                  <img src="@/assets/img/video/Bbi.png" alt="">
-              </div>
-              <div class="action-count">
-                  {{otherinfo.coin>=10000?(otherinfo.coin/10000).toFixed(1)+'万':otherinfo.coin}}
-              </div>
-          </div>
-          <div class="action-item">
-              <div class="action-item-icon">
-                  <img src="@/assets/img/video/shoucang.png" alt="">
-              </div>
-              <div class="action-count">
-                  {{otherinfo.favorite>=10000?(otherinfo.favorite/10000).toFixed(1)+'万':otherinfo.favorite}}
-              </div>
-          </div>
-          <div class="action-item">
-              <div class="action-item-icon">
-                  <img src="@/assets/img/video/fenxiang.png" alt="">
-              </div>
-              <div class="action-count">
-                  {{otherinfo.share>=10000?(otherinfo.share/10000).toFixed(1)+'万':otherinfo.share}}
-              </div>
-          </div>
-      </div>
-      <div id="video-tags">
-          <div class="tags-item" v-for="(item,index) in tagFinally" :class="{firstTag:index == 0}">{{item}}</div>
-      </div> -->
-      <detailInfo :detailInfo="videoList"></detailInfo>
+      <detailInfo v-if="recommand" :bvid="this.$route.query.bvid"></detailInfo>
       <detailRecommand v-if="recommand" :bvid="this.$route.query.bvid"></detailRecommand>
-      <detailReply v-if="reply"></detailReply>
+      <detailReply v-if="reply" :aid="this.videoList.aid"></detailReply>
   </div>
 </template>
 
@@ -153,9 +72,8 @@ export default {
         },
         itemclick(index){
             this.currentIndex = index;
-                this.recommand = !this.recommand;
-                this.reply = !this.reply
-
+            index == 0?this.recommand = true:this.recommand = false;
+            index == 1?this.reply = true:this.reply = false;
             this.$emit('tabClick',index)
         },
         GetChinese(strValue) {
@@ -164,6 +82,12 @@ export default {
             return strValue.match(reg).join('');
             }
             return '';
+        },
+        addCart(){
+            const product = {};
+            product.bvid = this.videoList.bvid
+
+            this.$store.commit('addCart',product)
         }
     },
     // beforeUpdate(){
@@ -177,6 +101,9 @@ export default {
 </script>
 
 <style>
+#video-detail{
+    padding-bottom: 49px;
+}
     .video-img{
         position: relative;
         width: 100%;

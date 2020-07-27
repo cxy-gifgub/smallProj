@@ -50,3 +50,13 @@ export function getDetailVedioRecommand(bvid) {
         urltype: 2
     })
 }
+export function getVedioReply(oid,type) {
+    return request({
+        url: '/x/v2/reply/main?',
+        params: {
+            oid: oid,
+            type:type
+        },
+        urltype: 2
+    })
+}

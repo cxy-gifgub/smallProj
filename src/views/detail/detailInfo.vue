@@ -1,6 +1,6 @@
 <template>
   <div>
-            <div class="UUInfo-box">
+        <div class="UUInfo-box">
           <div class="UUInfo-head">
               <div class="UU-img">
                   <img :src="userInfo.face" alt="">
@@ -16,7 +16,7 @@
               </div>
               
           </div>
-      </div>
+        </div>
       <div id="coll-box">
         <el-collapse>
             <el-collapse-item :title="detailInfo.title" name="1">
@@ -84,9 +84,10 @@
 </template>
 
 <script>
+import {getHomeBiliDetail} from 'network/homeBili'
 export default {
     props:{
-        detailInfo:Object
+        bvid:String
     },
     data(){
         return{
@@ -96,16 +97,27 @@ export default {
             },
             otherinfo:{},
             tagFinally:[],
-            tag:[]
+            tag:[],
+            detailInfo:{}
         }
     },
     mounted(){
-        console.log(this.detailInfo,'我再info');
-        this.userInfo = this.detailInfo.owner;
-        this.otherinfo =this.detailInfo.stat
-        var indexE =this.detailInfo.dynamic.lastIndexOf("\#");  
-                var indexB =this.detailInfo.dynamic.indexOf("\#");  
-                this.tag = (this.detailInfo.dynamic).slice(indexB,indexE).split("#")
+        console.log(this.bvid,'我再info');
+        if (this.bvid){
+            this.getInfo()
+        }
+        
+    },
+    methods:{
+        getInfo(){
+            getHomeBiliDetail(this.bvid).then((res)=>{
+                console.log(res);
+                this.detailInfo = res.data.data
+                this.userInfo = res.data.data.owner
+                this.otherinfo = res.data.data.stat
+                var indexE =res.data.data.dynamic.lastIndexOf("\#");  
+                var indexB =res.data.data.dynamic.indexOf("\#");  
+                this.tag = (res.data.data.dynamic).slice(indexB,indexE).split("#")
                 //把视频tag切出来放到数组
                 for(let i = 0,j = 0;i<this.tag.length;i++){
                     if(this.tag[i] != ''){
@@ -113,6 +125,8 @@ export default {
                         j += 1;
                     }
                 }
+            })
+        }
     }
 }
 </script>
@@ -227,9 +241,10 @@ export default {
         display: flex;
         padding: 0.5rem 1rem;
         border-top: 1px solid rgb(240, 240, 240);
+        flex-wrap:wrap;
     }
     .tags-item{
-        margin: 0 0.3rem;
+        margin: 0.2rem 0.3rem;
         background-color: rgb(244, 244, 244);
         color: #111;
         font-size: 14px;
