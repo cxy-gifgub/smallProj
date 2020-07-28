@@ -1,5 +1,9 @@
 @import "./normalize.css";
 
+:root{
+    --bili-color:#fb7299;
+    
+}
 a{
     text-decoration: none;
 }

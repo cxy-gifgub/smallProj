@@ -136,7 +136,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .nav-color{
     background-color: teal;
     color: #fff;

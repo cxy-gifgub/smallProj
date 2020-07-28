@@ -60,3 +60,12 @@ export function getVedioReply(oid,type) {
         urltype: 2
     })
 }
+export function getGategory(rid) {
+    return request({
+        url: '/x/web-interface/dynamic/region?&jsonp=jsonp&ps=10',
+        params: {
+            rid: rid,
+        },
+        urltype: 2
+    })
+}
