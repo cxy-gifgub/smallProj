@@ -62,7 +62,7 @@ export function getVedioReply(oid,type) {
 }
 export function getGategory(rid) {
     return request({
-        url: '/x/web-interface/dynamic/region?&jsonp=jsonp&ps=10',
+        url: '/x/web-interface/dynamic/region?&jsonp=jsonp&ps=20',
         params: {
             rid: rid,
         },

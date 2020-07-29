@@ -1,6 +1,6 @@
 <template>
   <div id="videoList">
-      <div class="video-item-small" v-for="item in categoryDatail">
+      <div class="video-item-small" v-for="item in categoryDatail" @click="toDetail(item)">
           <div class="video-item-img">
               <img :src="item.pic">
           </div>
@@ -15,6 +15,17 @@
 export default {
     props:{
         categoryDatail:Array
+    },
+    methods:{
+        toDetail(item){
+            console.log(item);
+            this.$router.push({
+                path:'/detail/',
+                query:{bvid:item.bvid,
+                        aid:item.aid,
+                        cid:item.cid
+                }}).catch(err => err)
+        }
     }
 }
 </script>

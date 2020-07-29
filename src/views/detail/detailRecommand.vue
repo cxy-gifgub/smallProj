@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="recommand-box" v-for="item in recommandList">
+    <div class="recommand-box" v-for="item in recommandList" @click="toDetail(item)">
         <div class="recom-pic">
             <div class="recom-pic-box">
                 <img :src="item.pic" alt="">
@@ -49,6 +49,17 @@ export default {
             console.log(this.recommandList );
             // this.upname = this.recommandList.owner.name
         })
+    },
+    methods:{
+        toDetail(item){
+             console.log(item);
+            this.$router.push({
+                path:'/detail/',
+                query:{bvid:item.bvid,
+                        aid:item.aid,
+                        cid:item.cid
+                }}).catch(err => err)
+        }
     }
 }
 </script>

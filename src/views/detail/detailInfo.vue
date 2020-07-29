@@ -61,8 +61,9 @@
               </div>
           </div>
           <div class="action-item">
-              <div class="action-item-icon">
-                  <img src="@/assets/img/video/shoucang.png" alt="">
+              <div class="action-item-icon" @click="shoucang">
+                  <img v-if="!isShoucang" src="@/assets/img/video/shoucang.png" alt="">
+                  <img v-else src="@/assets/img/video/shoucang_a.png" alt="">
               </div>
               <div class="action-count">
                   {{otherinfo.favorite>=10000?(otherinfo.favorite/10000).toFixed(1)+'万':otherinfo.favorite}}
@@ -98,7 +99,8 @@ export default {
             otherinfo:{},
             tagFinally:[],
             tag:[],
-            detailInfo:{}
+            detailInfo:{},
+            isShoucang:false
         }
     },
     mounted(){
@@ -126,6 +128,18 @@ export default {
                     }
                 }
             })
+        },
+        shoucang(){
+            this.isShoucang = !this.isShoucang;
+            if(this.isShoucang){
+                this.otherinfo.favorite += 1;
+                const product = {};
+                product.bvid = this.bvid
+                this.$store.commit('addCart',product)
+            }
+            else{
+                this.otherinfo.favorite -= 1
+            }
         }
     }
 }

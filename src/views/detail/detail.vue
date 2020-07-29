@@ -86,7 +86,6 @@ export default {
         addCart(){
             const product = {};
             product.bvid = this.videoList.bvid
-
             this.$store.commit('addCart',product)
         }
     },

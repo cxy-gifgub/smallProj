@@ -1,20 +1,14 @@
 <template>
   <div>
         <NavBar><div slot="center" class="nav-color">{{tagsInfo.name}}</div></NavBar>
-        <el-tabs v-model="activeName" @tab-click="handleClick" >
-            <el-tab-pane v-for="(item,index) in tagList" 
-            :label="item.name" 
-            :name="item.name" 
-            :key="item.key">
-                <videoList :categoryDatail="categoryDatailList"></videoList>
-            </el-tab-pane>
-        </el-tabs>
+        <tabControlCopy :titles="tagsName" @tabClick='tabClick'></tabControlCopy>
+        <videoList v-if="tagsContent['err']" :categoryDatail="tagsContent[currentType].list"></videoList>
   </div>
 </template>
-
+ 
 <script>
 import NavBar from '@/components/navbar/NavBar'
-import tabControl from '@/components/content/tabControl/tabControl'
+import tabControlCopy from '@/components/content/tabControl/tabControlCopy'
 import {getGategory} from '@/network/homeBili'
 import categoryDatail from '@/views/category/categoryDatail'
 import videoList from '@/components/content/videoList'
@@ -22,9 +16,9 @@ export default {
     name:"smallTags",
     components:{
         NavBar,
-        tabControl,
+        tabControlCopy,
         categoryDatail,
-        videoList
+        videoList,
     },
     data(){
         return{
@@ -32,26 +26,54 @@ export default {
             tagList:[],
             activeName: '',
             tagsDatailList:[],
-            categoryDatailList:[]
+            categoryDatailList:[],
+            tagsName:[],
+            tagsContent:{
+                'err':false
+            },
+            currentType:''
         }
     },
     created(){
+        console.log(this.tagsContent['err'],'状态');
+        console.log(this.$route.query.blocks,'this.$route.query.blocks');
         this.tagList = this.$route.query.blocks
-        this.activeName = this.tagList[0].name
+        console.log(this.tagList,'this.tagList');
+        this.currentType = this.tagList[0].name
+        console.log(this.currentType);
+        console.log(this.$route.query,'this.$route.query');
+        for(var i = 0;i<this.tagList.length;i++){
+            this.tagsName.push(this.tagList[i].name)
+        }
+        console.log(this.tagsName,'tagList');
         this.tagsInfo = this.$route.query;
-        this.getGategory(this.tagList[0].key)
+        for(let i = 0;i<this.tagList.length;i++){
+            
+            this.tagsContent[this.tagList[i].name] = {list:[]}
+            this.getGategory(this.tagList[i].key,this.tagList[i].name);
+            
+            // if(i == this.tagList.length){
+            //     this.tagsContent['err'] = true
+            // }
+        }
+        console.log('创建完了');
     },
     methods:{
-        handleClick(tab, event) {
-            console.log(tab.$options._parentVnode.key, event);
-            this.getGategory(tab.$options._parentVnode.key)
-        },
-        getGategory(rid){
+        getGategory(rid,tagName){
             getGategory(rid).then(res=>{
-                this.categoryDatailList = res.data.data.archives
-                console.log(res,'res');
+                // this.categoryDatailList = res.data.data.archives
+                this.tagsContent[tagName].list.push(...res.data.data.archives)
+                console.log(this.tagsContent,'this.tagsContent');
+                this.tagsContent['err'] = true
             })
+        },
+        tabClick(tagName){
+            console.log(tagName,'穿回来的tagName');
+            this.currentType = tagName
         }
+    },
+    destroyed(){
+        console.log('摧毁了');
     }
 }
 </script>
