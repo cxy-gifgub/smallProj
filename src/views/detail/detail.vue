@@ -1,6 +1,7 @@
 <template>
   <div id="video-detail">
       <div class="video-img">
+          <img class="back-icon" src="@/assets/img/video/bck.png" @click="$router.go(-1)">
           <img class="video-pic" :src="videoList.pic" @click="addCart">
           <img class="video-icon" src="@/assets/img/video/play.png">
       </div>
@@ -13,7 +14,7 @@
         <div class="tab-right"></div>
       </div>  
       <detailInfo v-if="recommand" :bvid="this.$route.query.bvid"></detailInfo>
-      <detailRecommand v-if="recommand" :bvid="this.$route.query.bvid"></detailRecommand>
+      <detailRecommand v-if="recommand" :bvid="this.$route.query.bvid" @newBvid="getNewBvid"></detailRecommand>
       <detailReply v-if="reply" :aid="this.videoList.aid"></detailReply>
   </div>
 </template>
@@ -30,6 +31,7 @@ export default {
         detailReply,
         detailInfo
     },
+    inject:['reload'],
     data(){
         return {
             recommand:true,
@@ -44,12 +46,13 @@ export default {
             otherinfo:{},
             tag:[],
             tagFinally:[],
-            detailInfo:[]
+            detailInfo:[],
+            newBvid:''
         }
     },
     created(){
         this.getDetail();
-        console.log('我是挂载前');
+        console.log('我创建');
     },
     methods:{
         getDetail(){
@@ -84,25 +87,34 @@ export default {
             return '';
         },
         addCart(){
+            console.log(this.videoList);
             const product = {};
-            product.bvid = this.videoList.bvid
+            product.bvid = this.videoList.bvid;
             this.$store.commit('addCart',product)
+        },
+        getNewBvid(bvid){
+            console.log(bvid);
+            this.reload()
+
         }
-    },
-    // beforeUpdate(){
-    //     this.getDetail()
-    // }
-    // watch:{
-    //     "$route.query.bvid": "getDetail"
-    // }
+    }
 
 }
 </script>
 
 <style>
-#video-detail{
-    padding-bottom: 49px;
-}
+    #video-detail{
+        padding-bottom: 49px;
+    }
+    .back-icon{
+        height: 1.5rem;
+        width: 1.5rem;
+        position: absolute;
+        top: 0.5rem;
+        left: 1rem;
+        z-index: 1;
+        opacity: 0.8;
+    }
     .video-img{
         position: relative;
         width: 100%;

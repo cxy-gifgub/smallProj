@@ -31,54 +31,48 @@ export default {
             tagsContent:{
                 'err':false
             },
-            currentType:''
+            currentType:'',
         }
     },
     created(){
-        console.log(this.tagsContent['err'],'状态');
-        console.log(this.$route.query.blocks,'this.$route.query.blocks');
-        this.tagList = this.$route.query.blocks
-        console.log(this.tagList,'this.tagList');
+        //此处接收参数的时候，应该把参数从字符串转成对象，同理在传参数的时候也会要把对象转成字符串
+        this.tagsInfo = JSON.parse(this.$route.query.data)
+        this.tagList = this.tagsInfo.blocks
         this.currentType = this.tagList[0].name
-        console.log(this.currentType);
-        console.log(this.$route.query,'this.$route.query');
+        this.tagsContent[this.tagList[0].name] = {list:[]}
+        this.getGategory(this.tagList[0].key,this.tagList[0].name);
         for(var i = 0;i<this.tagList.length;i++){
             this.tagsName.push(this.tagList[i].name)
         }
-        console.log(this.tagsName,'tagList');
-        this.tagsInfo = this.$route.query;
-        for(let i = 0;i<this.tagList.length;i++){
-            
+        for(let i = 1;i<this.tagList.length;i++){
             this.tagsContent[this.tagList[i].name] = {list:[]}
             this.getGategory(this.tagList[i].key,this.tagList[i].name);
-            
-            // if(i == this.tagList.length){
-            //     this.tagsContent['err'] = true
-            // }
         }
-        console.log('创建完了');
     },
+
     methods:{
         getGategory(rid,tagName){
             getGategory(rid).then(res=>{
-                // this.categoryDatailList = res.data.data.archives
                 this.tagsContent[tagName].list.push(...res.data.data.archives)
                 console.log(this.tagsContent,'this.tagsContent');
-                this.tagsContent['err'] = true
+                //判断是否获取到了推荐的，只有获取了推荐列表才开始渲染
+                if(tagName == '推荐'){
+                    this.tagsContent['err'] = true
+                }
             })
         },
         tabClick(tagName){
-            console.log(tagName,'穿回来的tagName');
+            console.log(tagName,'传回来的tagName');
             this.currentType = tagName
         }
-    },
-    destroyed(){
-        console.log('摧毁了');
     }
 }
 </script>
 
 <style scoped>
+    ::-webkit-scrollbar {
+        display: none; /* Chrome Safari */
+    }
     .nav-color{
         color: var(--bili-color);
     }

@@ -1,6 +1,6 @@
 <template>
   <div id="videoList">
-      <div class="video-item-small" v-for="item in categoryDatail" @click="toDetail(item)">
+      <div v-if="redenr" class="video-item-small" v-for="item in categoryDatail" @click="toDetail(item)" :key="item.bvid">
           <div class="video-item-img">
               <img :src="item.pic">
           </div>
@@ -15,6 +15,20 @@
 export default {
     props:{
         categoryDatail:Array
+    },
+    data(){
+        return{
+            categoryList:[],
+            redenr:false
+        }
+    },
+    created(){
+        this.categoryList = this.categoryDatail
+        if(this.categoryList){
+            this.redenr = true
+        }
+        console.log(this.categoryDatail,'123333333');
+        console.log('创建了，你拿到了吗');
     },
     methods:{
         toDetail(item){

@@ -1,5 +1,6 @@
 <template>
 <div>
+    <NavBar><div slot="center" class="nav-color">收藏夹</div></NavBar>
     <div class="recommand-box" v-for="item in recommandList" @click="toDetail(item)">
         <div class="recom-pic">
             <div class="recom-pic-box">
@@ -9,18 +10,18 @@
         </div>
         <div class="recom-info" >
             <div class="recom-title">{{item.title}}</div>
-            <div class="recom-up" v-if="item.owner">
+            <div class="recom-up">
                 <div class="up-icon"><img src="@/assets/img/video/upmaster.png" alt=""></div>
-                {{item.owner.name}}
+                {{item.name}}
                 </div>
-            <div class="recom-other" v-if="item.stat">
+            <div class="recom-other">
                 <div class="recom-times">
                     <div class="recom-oth-icon"><img src="@/assets/img/video/views.png" alt=""></div>
-                    <div>{{item.stat.view>=10000?(item.stat.view/10000).toFixed(2):item.stat.view}}万</div>
+                    <div>{{item.view>=10000?(item.view/10000).toFixed(2):item.view}}万</div>
                 </div>
                 <div class="recomdanmu-count">
                     <div class="recom-oth-icon"><img src="@/assets/img/video/danmaku.png" alt=""></div>
-                    <div>{{item.stat.danmaku}}</div>
+                    <div>{{item.danmaku}}</div>
                 </div>
             </div>
         </div>
@@ -29,8 +30,13 @@
 </template>
 
 <script>
-import {getDetailVedioRecommand} from '@/network/homeBili'
+import {getHomeBiliDetail} from '@/network/homeBili'
+import NavBar from 'components/navbar/NavBar'
 export default {
+    name:'cart',
+    components:{
+        NavBar
+    },
     data(){
         return{
             recommandList:[],
@@ -40,14 +46,7 @@ export default {
     },
     created(){
         console.log(this.$store.state.cartList);
-        this.bvid = this.$store.state.cartList[0].bvid
-        console.log('创建了');
-        getDetailVedioRecommand(this.bvid).then((res)=>{
-            console.log(res);
-            this.recommandList = res.data.data;
-            console.log(this.recommandList );
-            // this.upname = this.recommandList.owner.name
-        })
+        this.recommandList = this.$store.state.cartList
     },
     methods:{
         toDetail(item){
@@ -59,14 +58,14 @@ export default {
                         cid:item.cid
                 }}).catch(err => err)
         }
-    },
-    destroyed(){
-      console.log('摧毁了');
     }
 }
 </script>
 
-<style>
+<style scoped>
+    .nav-color{
+        color: var(--bili-color);
+    }
     .recommand-box{
         display: flex;
         padding: 0.5rem 1rem;

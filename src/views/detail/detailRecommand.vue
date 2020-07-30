@@ -43,16 +43,21 @@ export default {
     },
     created(){
         console.log(this.bvid);
-        getDetailVedioRecommand(this.bvid).then((res)=>{
-            console.log(res);
-            this.recommandList = res.data.data;
-            console.log(this.recommandList );
-            // this.upname = this.recommandList.owner.name
-        })
+        this.getDetailVedioRecommand()
     },
     methods:{
+        getDetailVedioRecommand(){
+            getDetailVedioRecommand(this.bvid).then((res)=>{
+                console.log(res);
+                this.recommandList = res.data.data;
+                console.log(this.recommandList );
+            // this.upname = this.recommandList.owner.name
+        })
+        }
+        ,
         toDetail(item){
              console.log(item);
+             this.$emit('newBvid',item.bvid)
             this.$router.push({
                 path:'/detail/',
                 query:{bvid:item.bvid,

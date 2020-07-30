@@ -243,7 +243,9 @@ export default {
     toSmallTag(item){
       this.$router.push({
                 path:'/smallTags/',
-                query:item}).catch(err => err)
+                query:{
+                  data:JSON.stringify(item)
+                }}).catch(err => err)
     }
   }
 }

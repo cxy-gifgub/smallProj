@@ -33,6 +33,7 @@
               <div class="v-oth-icon"><img src="@/assets/img/video/danmaku.png" alt=""></div>
               <div>{{otherinfo.danmaku}}</div>
           </div>
+          <!-- <div class="video-bvid">{{detailInfo.ctime}}</div> -->
           <div class="video-bvid">{{detailInfo.bvid}}</div>
       </div>
       <div id="user-action">
@@ -108,7 +109,6 @@ export default {
         if (this.bvid){
             this.getInfo()
         }
-        
     },
     methods:{
         getInfo(){
@@ -117,6 +117,7 @@ export default {
                 this.detailInfo = res.data.data
                 this.userInfo = res.data.data.owner
                 this.otherinfo = res.data.data.stat
+                // this.detailInfo.ctime = Date(parseInt(this.detailInfo.ctime) * 1000).toLocaleString().replace(/:\d{1,2}$/, ' ');
                 var indexE =res.data.data.dynamic.lastIndexOf("\#");  
                 var indexB =res.data.data.dynamic.indexOf("\#");  
                 this.tag = (res.data.data.dynamic).slice(indexB,indexE).split("#")
@@ -134,6 +135,11 @@ export default {
             if(this.isShoucang){
                 this.otherinfo.favorite += 1;
                 const product = {};
+                product.title = this.detailInfo.title;
+                product.pic = this.detailInfo.pic;
+                product.name = this.detailInfo.owner.name;
+                product.view = this.detailInfo.stat.view;
+                product.danmaku = this.detailInfo.stat.danmaku;
                 product.bvid = this.bvid
                 this.$store.commit('addCart',product)
             }

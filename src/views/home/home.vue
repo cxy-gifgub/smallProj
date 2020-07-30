@@ -68,7 +68,7 @@ export default {
       this.getHomeDedatil('5')
     },
     mounted(){
-
+      console.log('挂载完了');
     },
     methods:{
       getHomeBanner(){
@@ -137,8 +137,11 @@ export default {
 </script>
 
 <style scoped>
+  ::-webkit-scrollbar {
+    display: none; /* Chrome Safari */
+  }
   .nav-color{
-    background-color: teal;
+    background-color: var(--bili-color);
     color: #fff;
   }
   #home{

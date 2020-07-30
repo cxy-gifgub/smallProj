@@ -1,7 +1,7 @@
 <template>
   <div class="tab-control-box">
       <div v-for="(item,index) in titles" class="tab-control-item" :class="{active:index === currentIndex}" @click="itemclick(index,item)" :key="index">
-          <span>{{item}}</span>
+          <span class="item-title">{{item}}</span>
       </div>
   </div>
 </template>
@@ -43,13 +43,16 @@ export default {
         
     }
     .tab-control-item{
-        min-width: 35%;
         flex: 1;
         height: 3rem;
         line-height: 3rem;
     }
     .tab-control-item span{
         padding: 0.5rem 0.8rem;
+    }
+    .item-title{
+        word-break: keep-all;
+        white-space:nowrap;
     }
     .active{
         color: teal;

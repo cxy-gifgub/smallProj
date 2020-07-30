@@ -9,6 +9,7 @@ const store = new Vuex.Store({
     },
     mutations: {
         addCart(state, payload) {
+            console.log(payload);
             let oldProduct = state.cartList.find(item => item.bvid === payload.bvid)
             if (oldProduct) {
                 oldProduct.count += 1;
