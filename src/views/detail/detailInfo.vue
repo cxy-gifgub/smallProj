@@ -38,8 +38,9 @@
       </div>
       <div id="user-action">
           <div class="action-item">
-              <div class="action-item-icon">
-                  <img src="@/assets/img/video/zan.png" alt="">
+              <div class="action-item-icon" @click="dianzan">
+                  <img v-if="!dianZan" src="@/assets/img/video/zan.png" alt="">
+                  <img v-else src="@/assets/img/video/zan_a.png" alt="">
               </div>
               <div class="action-count">
                   {{otherinfo.like>=10000?(otherinfo.like/10000).toFixed(1)+'万':otherinfo.like}}
@@ -101,7 +102,8 @@ export default {
             tagFinally:[],
             tag:[],
             detailInfo:{},
-            isShoucang:false
+            isShoucang:false,
+            dianZan:false
         }
     },
     mounted(){
@@ -146,6 +148,10 @@ export default {
             else{
                 this.otherinfo.favorite -= 1
             }
+        },
+        dianzan(){
+            this.dianZan = !this.dianZan;
+            this.dianZan?this.otherinfo.like += 1:this.otherinfo.like -= 1
         }
     }
 }
@@ -169,7 +175,7 @@ export default {
         height: 2rem;
         width: 2rem;
         border-radius: 50%;
-        border: 2px solid teal;
+        border: 2px solid var(--bili-color);
         margin-right:0.5rem;
     }
     .UU-img img{
@@ -178,7 +184,7 @@ export default {
         border-radius: 50%;
     }
     .UU-name{
-        color: teal;
+        color: var(--bili-color);
         font-size: 14px;
         font-weight: 550;
     }
@@ -190,7 +196,7 @@ export default {
     }
     .follow-click{
         margin-right: 1rem;
-        background-color: teal;
+        background-color: var(--bili-color);
         padding: 0.2rem 1rem;
         color: #fff;
         border-radius: 5px;
@@ -274,6 +280,6 @@ export default {
         display: flex;
     }
     .firstTag{
-        color: teal;
+        color: var(--bili-color);
     }
 </style>

@@ -5,18 +5,18 @@
                 <img slot="item-icon" src="@/assets/img/tabbar/shouye.png" alt="">
                 <img slot="item-icon-active" src="@/assets/img/tabbar/shouye_activity.png" alt="">
                 <div slot="item-text">首页</div>
-                </tabItem>
-                <tabItem  path="/category">
+            </tabItem>
+            <tabItem  path="/category">
                 <img slot="item-icon" src="@/assets/img/tabbar/liebiaoxingshi.png" alt="">
                 <img slot="item-icon-active" src="@/assets/img/tabbar/liebiaoxingshi_activity.png" alt="">
                 <div slot="item-text">分类</div>
-                </tabItem>
-                <tabItem  path="/cart">
+            </tabItem>
+            <tabItem  path="/cart">
                 <img slot="item-icon" src="@/assets/img/tabbar/gouwuche.png" alt="">
                 <img slot="item-icon-active" src="@/assets/img/tabbar/gouwuche_activity.png" alt="">
-                <div slot="item-text">购物车</div>
-                </tabItem>
-                <tabItem  path="/profile">
+                <div slot="item-text">收藏</div>
+            </tabItem>
+            <tabItem  path="/profile">
                 <img slot="item-icon" src="@/assets/img/tabbar/wode.png" alt="">
                 <img slot="item-icon-active" src="@/assets/img/tabbar/wode_activity.png" alt="">
                 <div slot="item-text">我的</div>

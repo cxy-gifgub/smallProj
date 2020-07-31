@@ -52,9 +52,9 @@ export default {
         padding: 0.5rem 0.8rem;
     }
     .active{
-        color: teal;
+        color: var(--bili-color);
     }
     .active span{
-        border-bottom: 3px solid teal;
+        border-bottom: 3px solid var(--bili-color);
     }
 </style>

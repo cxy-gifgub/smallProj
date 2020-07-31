@@ -1,6 +1,6 @@
 <template>
 <div>
-    <NavBar><div slot="center" class="nav-color">收藏夹</div></NavBar>
+    <NavBar class="nav-color"><div slot="center" >收藏夹</div></NavBar>
     <div class="recommand-box" v-for="item in recommandList" @click="toDetail(item)">
         <div class="recom-pic">
             <div class="recom-pic-box">
@@ -64,7 +64,8 @@ export default {
 
 <style scoped>
     .nav-color{
-        color: var(--bili-color);
+        background-color: var(--bili-color);
+        color: #fff;
     }
     .recommand-box{
         display: flex;

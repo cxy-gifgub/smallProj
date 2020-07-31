@@ -1,26 +1,41 @@
 <template>
   <div id="video-detail">
-      <div class="video-img">
-          <img class="back-icon" src="@/assets/img/video/bck.png" @click="$router.go(-1)">
+      <div class="video-player" v-if="videoList.aid">
+          <i class="back-icon el-icon-arrow-left" @click="back"></i>
+          <iframe class="bili-player" :src="playerSrc" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+      </div>
+      <!-- <div class="video-img">
+          
           <img class="video-pic" :src="videoList.pic" @click="addCart">
           <img class="video-icon" src="@/assets/img/video/play.png">
-      </div>
-      <div class="video-tab">
+      </div> -->
+      <!-- <div class="video-tab">
             <div class="tab-left">
                 <div class="tab-left-item" v-for="(item,index) in videoInfoItem" :class="{active:index === currentIndex}" @click="itemclick(index)" :key="index">
                     <div class="tab-sm">{{item}}</div>
                 </div>
             </div>
         <div class="tab-right"></div>
-      </div>  
-      <detailInfo v-if="recommand" :bvid="this.$route.query.bvid"></detailInfo>
+      </div>   -->
+      <!-- <detailInfo v-if="recommand" :bvid="this.$route.query.bvid"></detailInfo>
       <detailRecommand v-if="recommand" :bvid="this.$route.query.bvid" @newBvid="getNewBvid"></detailRecommand>
-      <detailReply v-if="reply" :aid="this.videoList.aid"></detailReply>
+      <detailReply v-if="reply" :aid="this.videoList.aid"></detailReply> -->
+      <el-tabs v-model="activeName">
+        <el-tab-pane label="简介" name="first">
+            <detailInfo v-if="videoList.aid" :bvid="this.$route.query.bvid"></detailInfo>
+            <detailRecommand v-if="videoList.aid" :bvid="this.$route.query.bvid" @newBvid="getNewBvid"></detailRecommand>
+        </el-tab-pane>
+        <el-tab-pane  name="second">
+            <span slot="label">评论  {{replyAcount == 0?'':replyAcount}}</span>
+            <detailReply v-if="videoList.aid" :aid="this.videoList.aid"></detailReply>
+        </el-tab-pane>
+      </el-tabs>
   </div>
 </template>
 
 <script>
 import {getHomeBiliDetail} from 'network/homeBili'
+import {getVedioReply} from 'network/homeBili'
 import detailRecommand from '@/views/detail/detailRecommand'
 import detailReply from '@/views/detail/detailReply'
 import detailInfo from '@/views/detail/detailInfo'
@@ -47,12 +62,22 @@ export default {
             tag:[],
             tagFinally:[],
             detailInfo:[],
-            newBvid:''
+            newBvid:'',
+            activeName: 'first',
+            replyAcount:0,
+            showVideo:true,
+            rlen:history.length
         }
     },
     created(){
         this.getDetail();
+        
         console.log('我创建');
+    },
+    computed:{
+        playerSrc(){
+            return `https://player.bilibili.com/player.html?aid=`+this.videoList.aid+`&bvid=`+this.videoList.bvid+`&cid=`+this.videoList.cid+`&page=1`
+        }
     },
     methods:{
         getDetail(){
@@ -71,6 +96,16 @@ export default {
                         j += 1;
                     }
                 }
+                if(this.videoList.aid){
+                    this.getReply()
+                }
+            })
+        },
+        getReply(){
+            getVedioReply(this.videoList.aid,1).then(res=>{
+                console.log(res,'我是详情页里面的res');
+                this.replyAcount = res.data.data.cursor.all_count
+                console.log(this.replyAcount,'this.replyAcount');
             })
         },
         itemclick(index){
@@ -95,7 +130,10 @@ export default {
         getNewBvid(bvid){
             console.log(bvid);
             this.reload()
-
+        },
+        back(){
+            let len = this.rlen - history.length - 1;//-1是不进入iframe页面的下级页面直接退出的话，执行后退一步的操作
+            this.$router.go(len);
         }
     }
 
@@ -103,6 +141,34 @@ export default {
 </script>
 
 <style>
+    .el-icon-arrow-left{
+        font-size: 1.5rem;
+        line-height: inherit;
+    }
+    .el-tabs__nav{
+        margin-left: 2rem;
+    }
+    .el-tabs__active-bar{
+        background-color: var(--bili-color);
+    }
+    .el-tabs__item.is-active{
+        color: var(--bili-color);
+    }
+    .el-tabs__nav-wrap::after{
+        background-color: #fff;
+    }
+    .el-tabs__item{
+        color: #999;
+    }
+    .bili-player{
+        width: 100%;
+        height: 100%;
+    }
+    .video-player{
+        width: 100%;
+        height: 12rem;
+        position: relative;
+    }
     #video-detail{
         padding-bottom: 49px;
     }
@@ -160,10 +226,10 @@ export default {
         font-weight: 550;
     }
     .active{
-        color: teal;
+        color: var(--bili-color);
     }
     .active div{
-        border-bottom: 2px solid teal;
+        border-bottom: 2px solid var(--bili-color);
     }
     /* .UUInfo-box{
         height: 3rem;
@@ -182,7 +248,7 @@ export default {
         height: 2rem;
         width: 2rem;
         border-radius: 50%;
-        border: 2px solid teal;
+        border: 2px solid var(--bili-color);
         margin-right:0.5rem;
     }
     .UU-img img{
@@ -191,7 +257,7 @@ export default {
         border-radius: 50%;
     }
     .UU-name{
-        color: teal;
+        color: var(--bili-color);
         font-size: 14px;
         font-weight: 550;
     }
@@ -203,7 +269,7 @@ export default {
     }
     .follow-click{
         margin-right: 1rem;
-        background-color: teal;
+        background-color: var(--bili-color);
         padding: 0.2rem 1rem;
         color: #fff;
         border-radius: 5px;
@@ -286,6 +352,6 @@ export default {
         display: flex;
     }
     .firstTag{
-        color: teal;
+        color: var(--bili-color);
     } */
 </style>

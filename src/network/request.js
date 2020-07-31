@@ -10,8 +10,7 @@ export function request(config) {
     }
 
     const instance = axios.create({
-        baseURL: nowUrl,
-        timeout: 5000
+        baseURL: nowUrl
     })
     //axios拦截器
     //请求拦截

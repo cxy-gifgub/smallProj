@@ -38,6 +38,9 @@ const routes = [
         name: "detail",
         path: '/detail',
         component: detail,
+        meta: {
+            navShow: true
+        }
         // beforeEnter: (to, from, next) => {
         // console.log(to,'to');
         // console.log(from,'from');

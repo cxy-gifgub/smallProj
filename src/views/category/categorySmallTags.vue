@@ -1,6 +1,12 @@
 <template>
   <div>
-        <NavBar><div slot="center" class="nav-color">{{tagsInfo.name}}</div></NavBar>
+        <NavBar class="nav-color">
+            <div slot="left" @click="$router.go(-1)">
+                <!-- <img class="back-icon" src="@/assets/img/video/bck.png"> -->
+                <i class="el-icon-arrow-left"></i>
+            </div>
+            <div slot="center" >{{tagsInfo.name}}</div>
+        </NavBar>
         <tabControlCopy :titles="tagsName" @tabClick='tabClick'></tabControlCopy>
         <videoList v-if="tagsContent['err']" :categoryDatail="tagsContent[currentType].list"></videoList>
   </div>
@@ -74,6 +80,15 @@ export default {
         display: none; /* Chrome Safari */
     }
     .nav-color{
-        color: var(--bili-color);
+        background-color: var(--bili-color);
+        color: #fff;
+    }
+    .back-icon{
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+    .el-icon-arrow-left{
+        font-size: 1.5rem;
+        line-height: inherit;
     }
 </style>
