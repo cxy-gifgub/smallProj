@@ -88,14 +88,18 @@ export default {
         getSearchAll(keyword,search_type,page){
             getSearchAll(keyword,search_type,page).then(res=>{
                 console.log(res);
-                this.searchResult[search_type].push(...res.data.data.result);
+                this.searchResult[search_type] = res.data.data.result;
+                // this.searchResult[search_type].push(...res.data.data.result);
                 console.log(this.searchResult[search_type]);
                 console.log(search_type,'这边是');
             })
         },
         search(keyword){
             console.log(this.inputSearch);
-            this.getSearch(this.inputSearch)
+            this.$router.replace({
+                path:'/search/',
+                query:{keyword:this.inputSearch}
+                }).catch(err => err)
             this.reload()
         },
         handleClick(tab, event) {

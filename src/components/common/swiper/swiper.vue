@@ -2,7 +2,7 @@
 <div>
     <div class="block">
         <el-carousel height="110px" autoplay>
-            <el-carousel-item v-for="item in imgList">
+            <el-carousel-item v-for="(item,index) in imgList" :key="index">
                     <img :src="item">
             </el-carousel-item>
         </el-carousel>

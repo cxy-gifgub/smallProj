@@ -1,17 +1,19 @@
 <template>
   <div id="live_block">
-      <div class="live_room" v-for="item in liveRoom">
-          <div class="live_img">
-              <img :src="item.cover" >
-              <div class="live_user">
-                  <div class="live_username">{{item.uname}}</div>
-                  <div class="live_attention">{{item.attentions>=10000?(item.attentions/10000).toFixed(2)+'万':item.attentions}}</div>
-              </div>
-          </div>
-          <div class="live_info">
-              <div class="live_title" v-html="item.title"></div>
-              <div class="live_tag">{{item.cate_name}}</div>
-          </div>
+      <div class="live_room" v-for="item in liveRoom" :key="item.uid">
+          <!-- <a :href="liveRul(item.uid)"> -->
+            <div class="live_img">
+                <img :src="item.cover" >
+                <div class="live_user">
+                    <div class="live_username">{{item.uname}}</div>
+                    <div class="live_attention">{{item.attentions>=10000?(item.attentions/10000).toFixed(2)+'万':item.attentions}}</div>
+                </div>
+            </div>
+            <div class="live_info">
+                <div class="live_title" v-html="item.title"></div>
+                <div class="live_tag">{{item.cate_name}}</div>
+            </div>
+          <!-- </a> -->
       </div>
   </div>
 </template>
@@ -21,6 +23,11 @@ export default {
     props:{
         liveRoom:Array
     }
+    // methods:{
+    //     liveRul(uid){
+    //         return `https://api.live.bilibili.com/bili/living_v2/`+uid+`?callback=liveXhrDone`
+    //     }
+    // }
 }
 </script>
 

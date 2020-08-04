@@ -16,7 +16,7 @@
               </div>
               <div class="bangumi-score" v-if="item.media_score">
                   {{item.media_score.score}}
-                  <div class="user_count">{{item.media_score.user_count>10000?item.media_score.user_count/10000+'万':item.media_score.user_count}}</div>
+                  <div class="user_count">{{item.media_score.user_count>10000?(item.media_score.user_count/10000).toFixed(1)+'万':item.media_score.user_count}}</div>
               </div>
           </div>
       </div>

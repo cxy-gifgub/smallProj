@@ -46,7 +46,7 @@ export default {
         recommendList:[],
         cataList:[],
         catalogyList:[],
-        fenlei:['流行','新款','精选'],
+        fenlei:['推荐','热门','精选'],
         goodlist:[],
         goods:{
           '1':{page:1,list:[]},
