@@ -9,6 +9,7 @@ const cart = () => import("@/views/cart/cart.vue")
 const profile = () => import("@/views/profile/profile.vue")
 const detail = () => import("@/views/detail/detail.vue")
 const smallTags = () => import("@/views/category/categorySmallTags.vue")
+const search = () => import('@/views/search/searchResult.vue')
 const routes = [
     {
         path: '',
@@ -52,6 +53,14 @@ const routes = [
         name: "smallTags",
         path: "/smallTags",
         component: smallTags,
+        meta: {
+            navShow:true
+        }
+    },
+    {
+        name: "search",
+        path: "/search",
+        component: search,
         meta: {
             navShow:true
         }

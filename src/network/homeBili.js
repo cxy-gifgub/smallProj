@@ -69,3 +69,24 @@ export function getGategory(rid) {
         urltype: 2
     })
 }
+export function getSearch(keyword,page) {
+    return request({
+        url: '/x/web-interface/search/all/v2',
+        params: {
+            keyword: keyword,
+            page:page
+        },
+        urltype: 2
+    })
+}
+export function getSearchAll(keyword, search_type,page) {
+    return request({
+        url: '/x/web-interface/search/type',
+        params: {
+            keyword: keyword,
+            search_type: search_type,
+            page:page
+        },
+        urltype: 2
+    })
+}

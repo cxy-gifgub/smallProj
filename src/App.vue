@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-  <keep-alive exclude="detail,smallTags,cart">
+  <keep-alive exclude="detail,smallTags,cart,search">
   <router-view v-if="isRouterAlive"></router-view>
   </keep-alive>
     <maintabbar v-if="!this.$route.meta.navShow"></maintabbar>

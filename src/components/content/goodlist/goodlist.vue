@@ -6,7 +6,7 @@
                   <img :src="item.pic" alt="">
                   <div class="video-info">
                     <div v-if="item.stat"><img class="small-icon" src="@/assets/img/video/views-f.png" >{{item.stat.view>=10000?(item.stat.view/10000).toFixed(2):item.stat.view}}万</div>
-                    <!-- <div v-if="item.stat"><img class="small-icon" src="@/assets/img/video/danmaku-f.png" >{{item.stat.danmaku>=10000?(item.stat.danmaku/10000).toFixed(2):item.stat.danmaku}}万</div> -->
+                    <div v-if="item.stat"><img class="small-icon" src="@/assets/img/video/danmaku-f.png" >{{item.stat.danmaku>=10000?(item.stat.danmaku/10000).toFixed(2):item.stat.danmaku}}万</div>
                     <div class="video-time">{{(item.duration/60).toFixed(2)}}</div>
                   </div>
               </div>
@@ -57,6 +57,7 @@ export default {
         letter-spacing: 2px;
     }
     .video-info{
+        letter-spacing: 0;
         position: absolute;
         bottom:0.2rem;
         display: flex;

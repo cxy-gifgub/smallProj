@@ -5,8 +5,14 @@
               ref="scroll"
               :pull-up-load="true"
               @pullingUp="loadMore">
-        <swiper :imgList="navList"></swiper>
-        <recommend :recommendList="recommendList"></recommend>
+        <swiper :imgList="swiperList"></swiper>
+        <el-input
+          placeholder="请输入内容"
+          v-model="input"
+          clearable
+          @change="searchbili">
+        </el-input>
+        <!-- <recommend :recommendList="recommendList"></recommend> -->
         <!-- <catalogy :catalogyList="catalogyList"></catalogy> -->
         <tabControl :titles="fenlei" 
                     class="tabState" 
@@ -23,6 +29,7 @@
 import NavBar from '@/components/navbar/NavBar'
 import {getHomeListdata} from 'network/home'
 import {getHomeBili} from 'network/homeBili'
+import {getSearch} from 'network/homeBili'
 
 import swiper from '@/components/common/swiper/swiper'
 import recommend from '@/views/home/homeComponents/recommend/recommend'
@@ -35,6 +42,7 @@ export default {
     data(){
       return{
         navList:[],
+        swiperList:[require('@/assets/img/swip1.png'),require('@/assets/img/swip2.png')],
         recommendList:[],
         cataList:[],
         catalogyList:[],
@@ -48,7 +56,9 @@ export default {
         currentType:'1',
         offsetTop:0,
         isFixed:false,
-        saveY:0
+        saveY:0,
+        input: '',
+        searchPage:1
       }
     },
     components:{
@@ -62,6 +72,7 @@ export default {
       backtop
     },
     created(){
+      console.log(this.swiperList);
       this.getHomeBanner()
       this.getHomeDedatil('1')
       this.getHomeDedatil('3')
@@ -124,6 +135,11 @@ export default {
         console.log('加载更多吧!');
         this.getHomeDedatil(this.currentType)
       },
+      searchbili(){
+        this.$router.push({
+          path:'/search/',
+          query:{keyword:this.input}}).catch(err => err)
+      }
     },
     activated(){
       this.$refs.scroll.scroll.refresh()

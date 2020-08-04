@@ -1,6 +1,7 @@
 <template>
 <div>
-    <div class="recommand-box" v-for="item in recommandList" @click="toDetail(item)">
+
+      <div class="recommand-box" v-for="item in videoList" @click="toDetail(item)">
         <div class="recom-pic">
             <div class="recom-pic-box">
                 <img :src="item.pic" alt="">
@@ -8,72 +9,57 @@
             <div class="recom-time"></div>
         </div>
         <div class="recom-info" >
-            <div class="recom-title">{{item.title}}</div>
-            <div class="recom-up" v-if="item.owner">
+            <div class="recom-title" v-html="item.title"></div>
+            <div class="recom-up">
                 <div class="up-icon"><img src="@/assets/img/video/upmaster.png" alt=""></div>
-                {{item.owner.name}}
+                {{item.name}}
                 </div>
-            <div class="recom-other" v-if="item.stat">
+            <div class="recom-other">
                 <div class="recom-times">
                     <div class="recom-oth-icon"><img src="@/assets/img/video/views.png" alt=""></div>
-                    <div>{{item.stat.view>=10000?(item.stat.view/10000).toFixed(2):item.stat.view}}万</div>
+                    <div>{{item.play>=10000?(item.play/10000).toFixed(2)+'万':item.play}}</div>
                 </div>
                 <div class="recomdanmu-count">
                     <div class="recom-oth-icon"><img src="@/assets/img/video/danmaku.png" alt=""></div>
-                    <div>{{item.stat.danmaku}}</div>
+                    <div>{{item.video_review>=10000?(item.video_review/10000).toFixed(2)+'万':item.video_review}}</div>
                 </div>
             </div>
         </div>
-    </div>
+      </div>
 </div>
 </template>
 
 <script>
-import {getDetailVedioRecommand} from '@/network/homeBili'
 export default {
-    name:"detailR",
     props:{
-        bvid:String
+        videoList:Array
     },
     data(){
         return{
-            recommandList:[],
-            upname:[]
+            inputSearch:''
         }
-    },
-    created(){
-        console.log(this.bvid);
-        this.getDetailVedioRecommand()
     },
     methods:{
-        getDetailVedioRecommand(){
-            getDetailVedioRecommand(this.bvid).then((res)=>{
-                console.log(res);
-                this.recommandList = res.data.data;
-                console.log(this.recommandList );
-            // this.upname = this.recommandList.owner.name
-        })
-        }
-        ,
         toDetail(item){
-            console.log(item);
-            this.$emit('newBvid',item.bvid)
-            this.$router.push({
-                path:'/detail/',
-                query:{bvid:item.bvid,
-                        aid:item.aid,
-                        cid:item.cid
-                }}).catch(err => err)
+        console.log(item);
+        this.$router.push({
+            path:'/detail/',
+            query:{bvid:item.bvid,
+                    aid:item.aid,
+                    cid:item.cid
+            }}).catch(err => err)
         }
     }
+    
 }
 </script>
 
-<style>
+<style scoped>
     .recommand-box{
         display: flex;
         padding: 0.5rem 1rem;
         position: relative;
+        background-color: #FFF;
     }
     .recommand-box::before{
         position: absolute;
@@ -81,7 +67,7 @@ export default {
         background-color: rgb(221, 221, 221);
         width: 95%;
         height: 1px;
-        top: 0;
+        bottom: 0;
         left: 0.5rem;
     }
     .recom-info{

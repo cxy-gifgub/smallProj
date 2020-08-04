@@ -1,11 +1,9 @@
 <template>
 <div>
     <div class="block">
-        <el-carousel height="190px" autoplay>
-            <el-carousel-item v-for="item in imgList" :key="item.acm">
-                <a :href="item.link">
-                    <img :src="item.image">
-                </a>
+        <el-carousel height="110px" autoplay>
+            <el-carousel-item v-for="item in imgList">
+                    <img :src="item">
             </el-carousel-item>
         </el-carousel>
     </div>
