@@ -64,7 +64,7 @@ export default {
         border-top-right-radius: 10px;
     }
     .live_info{
-        height: 3rem;
+        height: 2.5rem;
         padding: 0.5rem;
     }
     .live_username{

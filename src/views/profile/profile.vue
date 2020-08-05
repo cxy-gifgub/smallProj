@@ -29,7 +29,6 @@
     },
     methods: {
       load () {
-        console.log('我还就那个起飞');
         this.loading = true
         setTimeout(() => {
           this.count += 2
@@ -39,11 +38,3 @@
     }
   }
 </script>
-<style>
-  .infinite-list-wrapper{
-    height:500px
-  }
-  li{
-    height: 100px;
-  }
-</style>

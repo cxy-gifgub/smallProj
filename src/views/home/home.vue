@@ -1,17 +1,20 @@
 <template>
   <div id="home">
-      <NavBar class="nav-color"><div slot="center">首页</div></NavBar>
-      <scroll class="content-home" 
+    <scroll class="content-home" 
               ref="scroll"
               :pull-up-load="true"
               @pullingUp="loadMore">
+        <div id="search-block">
+            <img class="user_img" src="@/assets/img/bilibili.png">
+            <div class="search-input">
+                <i class="el-icon-search" style="font-size:12px;color:rgb(191, 191, 191);"></i>
+                <input type="text" class="input-search"  v-model="inputSearch" @keyup.enter="searchbili">
+            </div>
+            <div class="other_icon" @click="searchbili">搜索</div>
+        </div>
+      <!-- <NavBar class="nav-color"><div slot="center">首页</div></NavBar> -->
+      
         <swiper :imgList="swiperList"></swiper>
-        <el-input
-          placeholder="请输入内容"
-          v-model="input"
-          clearable
-          @change="searchbili">
-        </el-input>
         <!-- <recommend :recommendList="recommendList"></recommend> -->
         <!-- <catalogy :catalogyList="catalogyList"></catalogy> -->
         <tabControl :titles="fenlei" 
@@ -38,6 +41,7 @@ import tabControl from '@/components/content/tabControl/tabControl'
 import goodlist from '@/components/content/goodlist/goodlist'
 import scroll from '@/components/common/scroll/scroll'
 import backtop from '@/components/content/backtop/backtop'
+import search from '@/components/common/search/search'
 export default {
     data(){
       return{
@@ -58,7 +62,8 @@ export default {
         isFixed:false,
         saveY:0,
         input: '',
-        searchPage:1
+        searchPage:1,
+        inputSearch:''
       }
     },
     components:{
@@ -69,7 +74,8 @@ export default {
       tabControl,
       goodlist,
       scroll,
-      backtop
+      backtop,
+      search
     },
     created(){
       console.log(this.swiperList);
@@ -135,10 +141,16 @@ export default {
         console.log('加载更多吧!');
         this.getHomeDedatil(this.currentType)
       },
-      searchbili(){
+      // clickToSearch(){
+      //   this.$router.push({
+      //     path:'/search/',
+      //     query:{keyword:this.}}).catch(err => err)
+      // },
+      searchbili(keyword){
+        console.log(this.inputSearch,'inputSearch');
         this.$router.push({
           path:'/search/',
-          query:{keyword:this.input}}).catch(err => err)
+          query:{keyword:this.inputSearch}}).catch(err => err)
       }
     },
     activated(){
@@ -156,12 +168,26 @@ export default {
   ::-webkit-scrollbar {
     display: none; /* Chrome Safari */
   }
+  .other_icon{
+    color: #999;
+    margin: 0 1rem;
+    display: flex;
+    align-items: center;
+  }
+  .other_icon img{
+    margin-left: auto;
+    height: 100%;
+  }
+  .user_img{
+    height: 100%;
+    margin-right: 1rem;
+  }
   .nav-color{
     background-color: var(--bili-color);
     color: #fff;
   }
   #home{
-    background-color: #eee;
+    background-color: #fff;
     padding-bottom: 60px;
     height: 100vh;
   }
@@ -178,4 +204,32 @@ export default {
     left: 0;
     right: 0;
   }
+  #search-block{
+        height: 1.8rem;
+        display: flex;
+        margin: 0.5rem 0;
+        padding: 0 0.5rem;
+        background-color: #fff;
+    }
+    .block_left,.other_icon1,.other_icon2{
+        height: 100%;
+    }
+    .search-input{
+        width: 65%;
+        background-color: #eee;
+        border-radius: 20px;
+        padding: 0 0.5rem;
+        display: flex;
+        align-items: center;
+    }
+    .input-search{
+        width: 100%;
+        background-color: #eee;
+        border: none;
+        border-radius: 20px;
+        font-size: 14px;
+        color: #999;
+        margin: 0 0.5rem;
+        outline:none;
+    }
 </style>

@@ -3,12 +3,12 @@
       <div id="search-block">
         <div class="search-input">
             <i class="el-icon-search" style="font-size:12px;color:rgb(191, 191, 191);"></i>
-            <input type="text" class="input-search" @keyup.enter="search" v-model="inputSearch">
+            <input type="text" class="input-search" @keyup.enter="search" v-model="inputSearch" :placeholder="this.$route.query.keyword">
         </div>
         <div class="cancel" @click="$router.go(-1)">
             取消
         </div>
-    </div>
+      </div>
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="综合" name="video">
             <allVideoList v-if="videoList" :videoList="videoList"></allVideoList>
@@ -117,6 +117,9 @@ export default {
     #search_page>>>.el-tabs__active-bar{
         background-color: var(--bili-color);
     }
+    #search_page>>>.el-tabs__content{
+        background-color: #f1f1f1;
+    }
     #search_page>>>.el-tabs__item.is-active{
         color: var(--bili-color);
     }
@@ -152,7 +155,8 @@ export default {
         margin: 0.5rem 0;
         padding: 0 0.5rem;
     }
-        .input-search{
+    .input-search{
+        width: 100%;
         background-color: #eee;
         border: none;
         border-radius: 20px;

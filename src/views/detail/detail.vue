@@ -133,7 +133,9 @@ export default {
         },
         back(){
             let len = this.rlen - history.length - 1;//-1是不进入iframe页面的下级页面直接退出的话，执行后退一步的操作
+            this.reload()
             this.$router.go(len);
+            
         }
     }
 

@@ -10,10 +10,11 @@
                 <img  :src="img">
               </div>
           </div>
-          <div class="art-info">
-              <div></div>
-              <div></div>
-              <div></div>
+          <div class="art_info">
+              <div>
+                  <img :src="zan">{{item.like}}</div>
+              <div><img src="@/assets/img/video/views.png">{{item.view>10000?(item.view/10000).toFixed(1)+'万':item.view}}</div>
+              <div><img src="@/assets/img/video/zan.png">{{item.reply}}</div>
               <div></div>
           </div>
       </div>
@@ -24,13 +25,18 @@
 export default {
     props:{
         articleList:Array
+    },
+    data(){
+        return{
+            zan:require("@/assets/img/video/zan.png")
+        }
     }
 }
 </script>
 
 <style>
     .article_item{
-        height: 10rem;
+        height: 11rem;
         margin: 0.8rem 0.5rem;
         box-shadow: 1px 1px 1px #ddd;
         border-radius: 5px;
@@ -71,5 +77,21 @@ export default {
     .art_img3 img{
         width: 100%;
         min-height: 100%;
+    }
+    .art_info{
+        height: 2rem;
+        display: flex;
+        color: #999;
+        font-size: 14px;
+        align-items: center;
+    }
+    .art_info div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0.1rem 0.5rem;
+    }
+    .art_info img{
+        height: 1rem;
     }
 </style>
