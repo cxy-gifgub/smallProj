@@ -1,8 +1,8 @@
 <template>
-  <div id="video-detail">
-      <div class="video-player" v-if="videoList.aid">
+  <div id="video-detail" v-if="videoList">
+      <div class="video-player" >
           <i class="back-icon el-icon-arrow-left" @click="back"></i>
-          <iframe class="bili-player" :src="playerSrc" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+          <iframe class="bili-player" :src="biliH5" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" ></iframe>
       </div>
       <!-- <div class="video-img">
           
@@ -20,7 +20,7 @@
       <!-- <detailInfo v-if="recommand" :bvid="this.$route.query.bvid"></detailInfo>
       <detailRecommand v-if="recommand" :bvid="this.$route.query.bvid" @newBvid="getNewBvid"></detailRecommand>
       <detailReply v-if="reply" :aid="this.videoList.aid"></detailReply> -->
-      <el-tabs v-model="activeName">
+      <el-tabs v-model="activeName" v-if="videoList">
         <el-tab-pane label="简介" name="first">
             <detailInfo v-if="videoList.aid" :bvid="this.$route.query.bvid"></detailInfo>
             <detailRecommand v-if="videoList.aid" :bvid="this.$route.query.bvid" @newBvid="getNewBvid"></detailRecommand>
@@ -66,23 +66,23 @@ export default {
             activeName: 'first',
             replyAcount:0,
             showVideo:true,
-            rlen:history.length
+            rlen:history.length,
+            biliH5:''
         }
     },
     created(){
         this.getDetail();
-        
-        console.log('我创建');
+        console.log(this.$route.query.bvid,'我是bvid');
+    },
+    mounted(){
+        console.log(this.$route.query,'我是bvid');
     },
     computed:{
-        playerSrc(){
-            return `https://player.bilibili.com/player.html?aid=`+this.videoList.aid+`&bvid=`+this.videoList.bvid+`&cid=`+this.videoList.cid+`&page=1`
-        }
+        
     },
     methods:{
         getDetail(){
             getHomeBiliDetail(this.$route.query.bvid).then((res)=>{
-                console.log(res);
                 this.videoList = res.data.data
                 this.userInfo = this.videoList.owner
                 this.otherinfo = this.videoList.stat
@@ -98,14 +98,19 @@ export default {
                 }
                 if(this.videoList.aid){
                     this.getReply()
+                    this.playerSrc()
                 }
+                
             })
+        },
+        playerSrc(){
+            console.log('我在player里面');
+            this.biliH5 = `https://player.bilibili.com/player.html?aid=`+this.videoList.aid+`&bvid=`+this.videoList.bvid+`&cid=`+this.videoList.cid+`&page=1`
         },
         getReply(){
             getVedioReply(this.videoList.aid,1).then(res=>{
                 console.log(res,'我是详情页里面的res');
                 this.replyAcount = res.data.data.cursor.all_count
-                console.log(this.replyAcount,'this.replyAcount');
             })
         },
         itemclick(index){
@@ -133,11 +138,17 @@ export default {
         },
         back(){
             let len = this.rlen - history.length - 1;//-1是不进入iframe页面的下级页面直接退出的话，执行后退一步的操作
-            this.reload()
             this.$router.go(len);
-            
+            this.reload()
         }
+    },
+    watch:{
+        '$route.path':function(newVal,oldVal){
+        console.log(newVal+"---"+oldVal);
+      }
+
     }
+  
 
 }
 </script>
