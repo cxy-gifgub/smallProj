@@ -2,7 +2,7 @@
   <div id="video-detail" v-if="videoList">
       <div class="video-player" >
           <i class="back-icon el-icon-arrow-left" @click="back"></i>
-          <iframe class="bili-player" :src="biliH5" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" ></iframe>
+          <detailH5player :query="this.$route.query"></detailH5player>
       </div>
       <!-- <div class="video-img">
           
@@ -39,12 +39,14 @@ import {getVedioReply} from 'network/homeBili'
 import detailRecommand from '@/views/detail/detailRecommand'
 import detailReply from '@/views/detail/detailReply'
 import detailInfo from '@/views/detail/detailInfo'
+import detailH5player from '@/views/detail/detailH5player'
 export default {
     name:"detail",
     components:{
         detailRecommand,
         detailReply,
-        detailInfo
+        detailInfo,
+        detailH5player
     },
     inject:['reload'],
     data(){
@@ -72,6 +74,7 @@ export default {
     },
     created(){
         this.getDetail();
+        console.log(this.$route.query,'----------------');
         console.log(this.$route.query.bvid,'我是bvid');
     },
     mounted(){
@@ -143,9 +146,6 @@ export default {
         }
     },
     watch:{
-        '$route.path':function(newVal,oldVal){
-        console.log(newVal+"---"+oldVal);
-      }
 
     }
   
